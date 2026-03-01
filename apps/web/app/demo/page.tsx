@@ -35,13 +35,7 @@ const steps = [
       "Current run context status plus recent telemetry table proving continuity across the mission pipeline.",
   },
   {
-    title: "6. Send Roblox Ingest Test",
-    href: "/ingest-lab",
-    shouldSee:
-      "Signed ingest request accepted and reflected as roblox-opencloud telemetry source.",
-  },
-  {
-    title: "7. Open Judge Proof Hub",
+    title: "6. Open Judge Proof Hub",
     href: "/proof",
     shouldSee:
       "Sponsor-by-sponsor verification list with page routes and expected evidence.",
@@ -91,6 +85,25 @@ export default function DemoPage() {
             ))}
           </div>
         )}
+      </section>
+
+      <section id="gameplay-video" className="fd-card">
+        <h2 className="text-xl font-semibold">Gameplay Demo Video</h2>
+        <p className="mt-2 text-sm text-[var(--muted)]">
+          Recorded game demo clip for judges and teammates.
+        </p>
+        <video controls className="mt-3 w-full rounded-lg border border-black/10 bg-black">
+          <source src="/media/frontierdispatch-demo.mkv" type="video/x-matroska" />
+          Your browser does not support embedded MKV playback.
+        </video>
+        <a
+          href="/media/frontierdispatch-demo.mkv"
+          className="mt-3 inline-flex fd-button-secondary"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Open/Download Demo Video
+        </a>
       </section>
 
       <section className="space-y-3">

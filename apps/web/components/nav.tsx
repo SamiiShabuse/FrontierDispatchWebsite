@@ -9,7 +9,6 @@ const navItems = [
   { href: "/ledger", label: "Ledger" },
   { href: "/simulator", label: "Simulator" },
   { href: "/copilot", label: "Luau Copilot" },
-  { href: "/ingest-lab", label: "Ingest Lab" },
   { href: "/log-run", label: "Log Run" },
   { href: "/dashboard", label: "Dashboard" },
   { href: "/mission-control", label: "Mission Control" },

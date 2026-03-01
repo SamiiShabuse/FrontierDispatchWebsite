@@ -30,7 +30,7 @@ export type RunTelemetryInput = {
   on_time: boolean;
   payout: number;
   town_stability_delta: Record<string, number>;
-  source?: "manual" | "ledger-auto" | "roblox-opencloud";
+  source?: "manual" | "ledger-auto";
   solana_signature?: string;
   voice_id?: string;
   plan_preview?: string;

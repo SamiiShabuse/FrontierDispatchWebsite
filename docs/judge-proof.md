@@ -29,31 +29,6 @@ Use this checklist during judging to verify each sponsor requirement quickly.
 - Verify: metrics update after ledger mint or log run.
 - Code: `/apps/web/lib/snowflake.ts`
 
-## Roblox Open Cloud Ingest
-
-- API: `/api/roblox/telemetry/ingest`
-- Test UI: `/ingest-lab`
-- Auth header: `x-frontier-ingest-secret`
-- Verify: send signed payload and observe source split in dashboard.
-- Code: `/apps/web/app/api/roblox/telemetry/ingest/route.ts`
-
-Quick test payload example:
-
-```json
-{
-  "runId": "judge-demo-run-1",
-  "contract": "Medicine convoy",
-  "towns": ["Tombstone", "Deadwood"],
-  "routeChoice": "balanced",
-  "events": ["Dust storm"],
-  "onTime": true,
-  "payout": 340,
-  "townStabilityDelta": { "Tombstone": 2, "Deadwood": 1 },
-  "riskScore": 55,
-  "timestamp": "2026-02-28T20:00:00.000Z"
-}
-```
-
 ## DigitalOcean
 
 - Deploy docs: `/docs/deploy.md`
@@ -76,4 +51,4 @@ Quick test payload example:
 
 ## Recommended Judge Click Path
 
-`/demo -> /dispatch -> /telegraph -> /ledger -> /dashboard -> /mission-control -> /ingest-lab -> /proof`
+`/demo -> /dispatch -> /telegraph -> /ledger -> /dashboard -> /mission-control -> /proof`

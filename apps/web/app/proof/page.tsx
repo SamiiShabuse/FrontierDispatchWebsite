@@ -26,12 +26,6 @@ const proofItems = [
     check: "Confirm non-zero metrics and source/proof rates.",
   },
   {
-    track: "Roblox Open Cloud",
-    route: "/api/roblox/telemetry/ingest",
-    page: "/ingest-lab",
-    check: "Send signed ingest payload in Ingest Lab and verify dashboard source split.",
-  },
-  {
     track: "Smalltalk",
     route: "Generated JSON from /smalltalk",
     page: "/dispatch",

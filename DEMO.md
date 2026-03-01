@@ -9,11 +9,10 @@
 5. Open **Ledger**, connect Phantom, mint proof, and open explorer link.
 6. Open **Dashboard** and verify:
    - run count changed
-   - source breakdown includes `ledger-auto` or `roblox-opencloud`
+   - source breakdown includes `ledger-auto`
    - chain-proof rate is visible
 7. Open **Mission Control** and verify current run continuity + recent telemetry list.
-8. Open **Ingest Lab**, send a signed test ingest, and refresh Dashboard source breakdown.
-9. Open **Proof Hub** and verify each sponsor checklist item.
+8. Open **Proof Hub** and verify each sponsor checklist item.
 
 ## Expected outputs
 
@@ -21,7 +20,6 @@
 - ElevenLabs: playable generated briefing audio.
 - Solana: devnet tx signature and explorer URL.
 - Snowflake/Telemetry: updated metrics and source/proof analytics.
-- Roblox ingest: available endpoint at `/api/roblox/telemetry/ingest` with shared-secret auth.
 
 ## Notes
 

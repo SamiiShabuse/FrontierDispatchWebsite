@@ -19,7 +19,6 @@ Add these in App Settings -> Environment Variables:
 
 - `NEXT_PUBLIC_SITE_URL=https://frontierdispatch.tech`
 - `ROBLOX_GAME_URL=...`
-- `ROBLOX_INGEST_SHARED_SECRET=...`
 - `GEMINI_API_KEY=...`
 - `ELEVENLABS_API_KEY=...`
 - `ELEVENLABS_VOICE_ID_DEFAULT=...`

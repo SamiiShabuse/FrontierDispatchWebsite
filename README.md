@@ -13,7 +13,6 @@ FrontierDispatch Mission Control is a Next.js + TypeScript platform that helps o
 - mint Solana proof-of-delivery receipts (`/ledger`)
 - ingest + analyze telemetry via Snowflake (`/dashboard`)
 - monitor active run continuity + recent telemetry (`/mission-control`)
-- test signed Roblox Open Cloud payloads (`/ingest-lab`)
 - run balancing simulations (`/simulator`)
 - generate Luau mission scaffolding (`/copilot`)
 - verify all sponsor categories quickly (`/proof`)
@@ -38,10 +37,6 @@ Follow [`DEMO.md`](./DEMO.md) and start at `/demo`.
   - APIs: `/apps/web/app/api/telemetry/insert/route.ts`, `/apps/web/app/api/telemetry/summary/route.ts`, `/apps/web/app/api/telemetry/recent/route.ts`, `/apps/web/app/api/telemetry/export/route.ts`
   - Storage integration: `/apps/web/lib/snowflake.ts`
   - SQL schema: `/snowflake/schema.sql`
-- **Roblox telemetry ingest**
-  - API: `/apps/web/app/api/roblox/telemetry/ingest/route.ts`
-  - Test UI: `/apps/web/app/ingest-lab/page.tsx`
-  - Auth helper: `/apps/web/lib/roblox-opencloud.ts`
 - **DigitalOcean**
   - Deploy guide: `/docs/deploy.md`
 - **.Tech domain**
@@ -101,7 +96,6 @@ Defined in `/apps/web/.env.example`:
 
 - `NEXT_PUBLIC_SITE_URL`
 - `ROBLOX_GAME_URL`
-- `ROBLOX_INGEST_SHARED_SECRET`
 - `GEMINI_API_KEY`
 - `ELEVENLABS_API_KEY`
 - `ELEVENLABS_VOICE_ID_DEFAULT`

@@ -305,10 +305,7 @@ export async function queryRecentRunsFromSnowflake(limit: number): Promise<Recen
       on_time: Boolean(row.ON_TIME),
       payout: Number(row.PAYOUT ?? 0),
       town_stability_delta: parseJsonRecord(row.TOWN_STABILITY_DELTA),
-      source:
-        row.SOURCE === "ledger-auto" || row.SOURCE === "roblox-opencloud"
-          ? row.SOURCE
-          : "manual",
+      source: row.SOURCE === "ledger-auto" ? row.SOURCE : "manual",
       solana_signature: row.SOLANA_SIGNATURE || undefined,
       voice_id: row.VOICE_ID || undefined,
       plan_preview: row.PLAN_PREVIEW || undefined,

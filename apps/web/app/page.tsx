@@ -28,6 +28,9 @@ export default function Home() {
           <Link href="/demo" className="fd-button-secondary">
             Open 2-minute Demo Hub
           </Link>
+          <Link href="/demo#gameplay-video" className="fd-button-secondary">
+            Watch Gameplay Demo Video
+          </Link>
         </div>
       </section>
 
