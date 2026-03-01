@@ -1,0 +1,39 @@
+{
+  "generatedBy": "Smalltalk EventModel",
+  "towns": [
+    {
+      "name": "Tombstone",
+      "biome": "desert",
+      "needs": ["Water", "Food"],
+      "stability": 62,
+      "routeRisk": {
+        "short-risky": 0.74,
+        "balanced": 0.53,
+        "long-safe": 0.31
+      }
+    },
+    {
+      "name": "Deadwood",
+      "biome": "mountain",
+      "needs": ["Food", "Medicine", "Tools"],
+      "stability": 55,
+      "routeRisk": {
+        "short-risky": 0.77,
+        "balanced": 0.56,
+        "long-safe": 0.36
+      }
+    },
+    {
+      "name": "Dodge City",
+      "biome": "main",
+      "needs": ["Gold"],
+      "stability": 71,
+      "routeRisk": {
+        "short-risky": 0.58,
+        "balanced": 0.35,
+        "long-safe": 0.21
+      }
+    }
+  ],
+  "events": ["Dust storm", "Broken bridge", "Bandits"]
+}

@@ -1,0 +1,23 @@
+[
+  {
+    "id": "C-001",
+    "title": "Tombstone Relief Convoy",
+    "towns": ["Tombstone"],
+    "resources": ["Water", "Food"],
+    "payout": 280
+  },
+  {
+    "id": "C-002",
+    "title": "Deadwood Clinic Resupply",
+    "towns": ["Deadwood"],
+    "resources": ["Food", "Medicine", "Tools"],
+    "payout": 420
+  },
+  {
+    "id": "C-003",
+    "title": "Dodge City Bullion Security Run",
+    "towns": ["Dodge City"],
+    "resources": ["Gold"],
+    "payout": 510
+  }
+]

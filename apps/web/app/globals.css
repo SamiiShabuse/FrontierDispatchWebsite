@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+:root {
+  --background: #09101a;
+  --foreground: #f5f8ff;
+  --card: #131f31;
+  --card-2: #1a2a44;
+  --muted: #9db2ce;
+  --accent: #e8b34b;
+  --accent-2: #56b2ff;
+  --success: #4ade80;
+  --danger: #f97373;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+a {
+  color: inherit;
+}
+
+.fd-card {
+  @apply rounded-xl border border-white/10 bg-[var(--card)] p-4 shadow-sm;
+}
+
+.fd-input {
+  @apply w-full rounded-lg border border-white/20 bg-[var(--card-2)] px-3 py-2 text-sm outline-none ring-0 placeholder:text-[var(--muted)] focus:border-[var(--accent-2)];
+}
+
+.fd-button {
+  @apply inline-flex items-center justify-center rounded-lg bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-slate-900 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70;
+}
+
+.fd-button-secondary {
+  @apply inline-flex items-center justify-center rounded-lg border border-white/20 bg-[var(--card-2)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-70;
+}
+
+.fd-badge {
+  @apply rounded-full border border-white/20 bg-white/5 px-3 py-1 text-xs font-medium text-[var(--muted)];
+}
