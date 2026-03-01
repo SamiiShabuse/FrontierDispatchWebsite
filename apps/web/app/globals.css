@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0816;
-  --foreground: #f3f0ff;
-  --card: #14102a;
-  --card-2: #20174a;
-  --muted: #b5acd7;
-  --accent: #c9a6ff;
-  --accent-2: #7dc9ff;
+  --background: #f7f7fc;
+  --foreground: #1f1838;
+  --card: #ffffff;
+  --card-2: #f2efff;
+  --muted: #685f8c;
+  --accent: #7f56d9;
+  --accent-2: #4299e1;
   --success: #4ade80;
   --danger: #f97373;
 }
@@ -21,8 +21,8 @@
 
 body {
   background:
-    radial-gradient(circle at 15% -10%, rgba(125, 201, 255, 0.14), transparent 42%),
-    radial-gradient(circle at 85% 0%, rgba(201, 166, 255, 0.2), transparent 35%),
+    radial-gradient(circle at 15% -10%, rgba(66, 153, 225, 0.12), transparent 40%),
+    radial-gradient(circle at 85% 0%, rgba(127, 86, 217, 0.12), transparent 32%),
     var(--background);
   color: var(--foreground);
 }
@@ -32,21 +32,21 @@ a {
 }
 
 .fd-card {
-  @apply rounded-xl border border-white/10 bg-[var(--card)] p-4 shadow-sm;
+  @apply rounded-xl border border-black/10 bg-[var(--card)] p-4 shadow-sm;
 }
 
 .fd-input {
-  @apply w-full rounded-lg border border-white/20 bg-[var(--card-2)] px-3 py-2 text-sm outline-none ring-0 placeholder:text-[var(--muted)] focus:border-[var(--accent-2)];
+  @apply w-full rounded-lg border border-black/15 bg-[var(--card-2)] px-3 py-2 text-sm outline-none ring-0 placeholder:text-[var(--muted)] focus:border-[var(--accent-2)];
 }
 
 .fd-button {
-  @apply inline-flex items-center justify-center rounded-lg bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-[#1f1138] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70;
+  @apply inline-flex items-center justify-center rounded-lg bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70;
 }
 
 .fd-button-secondary {
-  @apply inline-flex items-center justify-center rounded-lg border border-white/20 bg-[var(--card-2)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-70;
+  @apply inline-flex items-center justify-center rounded-lg border border-black/15 bg-white px-4 py-2 text-sm font-semibold text-[var(--foreground)] transition hover:bg-[var(--card-2)] disabled:cursor-not-allowed disabled:opacity-70;
 }
 
 .fd-badge {
-  @apply rounded-full border border-white/20 bg-white/5 px-3 py-1 text-xs font-medium text-[var(--muted)];
+  @apply rounded-full border border-black/15 bg-[var(--card-2)] px-3 py-1 text-xs font-medium text-[var(--muted)];
 }

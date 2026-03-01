@@ -10,7 +10,7 @@ export function JudgeProof({ apiRoute, codePath, clickSteps }: Props) {
       <p className="text-xs uppercase tracking-wide text-[var(--muted)]">
         Judge Proof
       </p>
-      <ul className="mt-2 space-y-1 text-sm text-slate-100">
+      <ul className="mt-2 space-y-1 text-sm text-[var(--foreground)]">
         <li>
           API Route: <code>{apiRoute}</code>
         </li>

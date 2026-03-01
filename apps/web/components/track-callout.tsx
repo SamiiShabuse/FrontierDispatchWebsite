@@ -9,7 +9,7 @@ export function TrackCallout({ track, details }: Props) {
       <p className="text-xs uppercase tracking-wide text-[var(--muted)]">
         How this qualifies for {track}
       </p>
-      <p className="mt-2 text-sm text-slate-100">{details}</p>
+      <p className="mt-2 text-sm text-[var(--foreground)]">{details}</p>
     </aside>
   );
 }

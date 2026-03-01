@@ -34,13 +34,13 @@ export default function Home() {
       <section className="grid gap-4 md:grid-cols-2">
         <div className="fd-card">
           <h2 className="text-xl font-semibold">Trailer</h2>
-          <div className="mt-3 h-48 rounded-lg border border-dashed border-white/20 bg-black/20 p-3 text-sm text-[var(--muted)]">
+          <div className="mt-3 h-48 rounded-lg border border-dashed border-black/20 bg-[var(--card-2)] p-3 text-sm text-[var(--muted)]">
             Trailer placeholder - drop in gameplay + dispatch UI montage.
           </div>
         </div>
         <div className="fd-card">
           <h2 className="text-xl font-semibold">Screenshots</h2>
-          <div className="mt-3 h-48 rounded-lg border border-dashed border-white/20 bg-black/20 p-3 text-sm text-[var(--muted)]">
+          <div className="mt-3 h-48 rounded-lg border border-dashed border-black/20 bg-[var(--card-2)] p-3 text-sm text-[var(--muted)]">
             Screenshots placeholder - contracts, routes, events, and delivery
             outcomes.
           </div>

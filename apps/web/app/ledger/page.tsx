@@ -111,10 +111,10 @@ export default function LedgerPage() {
 
       <section className="fd-card space-y-4">
         <h1 className="text-2xl font-bold">Proof-of-Delivery Ledger</h1>
-        <div className="rounded-md border border-white/20 bg-white/5 p-3 text-sm text-[var(--muted)]">
+        <div className="rounded-md border border-black/15 bg-[var(--card-2)] p-3 text-sm text-[var(--muted)]">
           <p>Wallet status: {wallet.connected ? "Connected" : "Not connected"}</p>
           {!phantomInstalled && (
-            <p className="mt-1 text-yellow-200">
+            <p className="mt-1 text-amber-700">
               Phantom extension is not detected. Install Phantom and use
               `localhost` URL (not network IP) in the same browser profile.
             </p>

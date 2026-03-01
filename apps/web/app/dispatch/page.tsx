@@ -196,7 +196,7 @@ export default function DispatchPage() {
           </p>
           <div className="mt-2 grid gap-2 md:grid-cols-3">
             {townStatuses.map((town) => (
-              <div key={town.name} className="rounded-md border border-white/10 p-2 text-sm">
+              <div key={town.name} className="rounded-md border border-black/10 p-2 text-sm">
                 <p className="font-medium">{town.name}</p>
                 <p className="text-[var(--muted)]">Needs: {town.needs.join(", ")}</p>
                 <p className="text-[var(--muted)]">Stability: {town.stability}</p>
@@ -217,7 +217,7 @@ export default function DispatchPage() {
             Copy plan
           </button>
         </div>
-        <pre className="mt-3 overflow-x-auto rounded-lg bg-black/30 p-3 text-sm whitespace-pre-wrap">
+        <pre className="mt-3 overflow-x-auto rounded-lg border border-black/10 bg-[var(--card-2)] p-3 text-sm whitespace-pre-wrap">
           {planText ||
             "Output will include recommended contracts, route rationale, contingencies, and summary."}
         </pre>

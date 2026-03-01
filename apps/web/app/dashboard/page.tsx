@@ -64,7 +64,7 @@ export default function DashboardPage() {
           </button>
         </div>
         {!data?.configured && (
-          <p className="rounded-md bg-yellow-500/15 p-2 text-sm text-yellow-100">
+          <p className="rounded-md border border-amber-300 bg-amber-50 p-2 text-sm text-amber-800">
             Snowflake not configured. Running in local development fallback mode.
           </p>
         )}
@@ -95,7 +95,7 @@ export default function DashboardPage() {
         <h2 className="text-xl font-semibold">Town Stability Averages</h2>
         <div className="mt-2 grid gap-2 md:grid-cols-3">
           {Object.entries(data?.summary?.townStabilityAverages ?? {}).map(([town, value]) => (
-            <div key={town} className="rounded-md border border-white/10 p-2 text-sm">
+            <div key={town} className="rounded-md border border-black/10 p-2 text-sm">
               <p className="font-medium">{town}</p>
               <p className="text-[var(--muted)]">Average delta: {value.toFixed(2)}</p>
             </div>
@@ -108,14 +108,14 @@ export default function DashboardPage() {
         <div className="mt-2 overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="border-b border-white/20">
+              <tr className="border-b border-black/20">
                 <th className="py-2">Day</th>
                 <th className="py-2">Runs</th>
               </tr>
             </thead>
             <tbody>
               {(data?.summary?.runsOverTime ?? []).map((row) => (
-                <tr key={row.day} className="border-b border-white/10">
+                <tr key={row.day} className="border-b border-black/10">
                   <td className="py-2">{row.day}</td>
                   <td className="py-2">{row.count}</td>
                 </tr>
