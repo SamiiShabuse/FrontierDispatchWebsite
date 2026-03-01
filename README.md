@@ -35,7 +35,7 @@ Follow [`DEMO.md`](./DEMO.md) and start at `/demo`.
   - UI + mint flow: `/apps/web/app/ledger/page.tsx`
   - Wallet providers: `/apps/web/components/providers.tsx`
 - **Snowflake**
-  - APIs: `/apps/web/app/api/telemetry/insert/route.ts`, `/apps/web/app/api/telemetry/summary/route.ts`, `/apps/web/app/api/telemetry/recent/route.ts`
+  - APIs: `/apps/web/app/api/telemetry/insert/route.ts`, `/apps/web/app/api/telemetry/summary/route.ts`, `/apps/web/app/api/telemetry/recent/route.ts`, `/apps/web/app/api/telemetry/export/route.ts`
   - Storage integration: `/apps/web/lib/snowflake.ts`
   - SQL schema: `/snowflake/schema.sql`
 - **Roblox telemetry ingest**

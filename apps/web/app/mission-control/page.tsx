@@ -97,6 +97,14 @@ export default function MissionControlPage() {
           <Link href="/proof" className="fd-button-secondary">
             Open Proof Hub
           </Link>
+          <a
+            href="/api/telemetry/export?limit=200"
+            className="fd-button-secondary"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Export CSV
+          </a>
           <button className="fd-button-secondary" onClick={refreshContext}>
             Refresh Context
           </button>

@@ -25,7 +25,7 @@ Use this checklist during judging to verify each sponsor requirement quickly.
 ## Snowflake
 
 - UI: `/dashboard`
-- APIs: `/api/telemetry/insert`, `/api/telemetry/summary`
+- APIs: `/api/telemetry/insert`, `/api/telemetry/summary`, `/api/telemetry/export`
 - Verify: metrics update after ledger mint or log run.
 - Code: `/apps/web/lib/snowflake.ts`
 
