@@ -15,8 +15,13 @@ type TtsResponse = {
 };
 
 const voiceOptions = [
-  { id: "EXAVITQu4vr4xnSDxMaL", label: "Marshal (Deep)" },
-  { id: "pNInz6obpgDQGcFmaJgB", label: "Courier (Bright)" },
+  { id: "ErXwobaYiN019PkySvjV", label: "Antoni (Gritty Command)" },
+  { id: "VR6AewLTigWG4xSOukaG", label: "Arnold (Heavy Radio)" },
+  { id: "TxGEqnHWrfWFTfGW9XjX", label: "Josh (Steady Briefing)" },
+  { id: "yoZ06aMxZJJ28mfd3POQ", label: "Sam (Calm Operations)" },
+  { id: "pNInz6obpgDQGcFmaJgB", label: "Adam (Clear Courier)" },
+  { id: "onwK4e9ZLuTAKqWW03F9", label: "Daniel (Warm Commander)" },
+  { id: "bIHbv24MWmeRgasZH58o", label: "Will (Ground Control)" },
 ];
 
 export default function TelegraphPage() {
@@ -116,6 +121,9 @@ export default function TelegraphPage() {
                 </option>
               ))}
             </select>
+            <p className="text-xs text-[var(--muted)]">
+              Masculine voice pack tuned for dispatch, radio, and command callouts.
+            </p>
           </label>
 
           <label className="space-y-1 text-sm">
