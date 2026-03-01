@@ -1,5 +1,8 @@
 # FrontierDispatch 2-Minute Demo Path
 
+For full sponsor requirement mapping and evidence checklist, see:
+`docs/mlh-requirements.md`.
+
 ## Fast judge route
 
 1. Open `https://frontierdispatch.tech/demo`.
@@ -25,3 +28,5 @@
 
 - If an API key is missing, each page shows a clear fallback/not-configured state.
 - Snowflake fallback mode still allows demo continuity for local runs.
+- If production `Live Integration Health` shows all `Not configured`, verify
+  DigitalOcean runtime environment variables and redeploy (see `docs/deploy.md`).

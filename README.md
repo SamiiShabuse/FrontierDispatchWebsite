@@ -4,6 +4,8 @@ Official web platform for developing and proving FrontierDispatch Roblox systems
 
 Live domain: **https://frontierdispatch.tech**
 
+Detailed sponsor/requirements mapping: [`docs/mlh-requirements.md`](./docs/mlh-requirements.md)
+
 ## What this project does
 
 FrontierDispatch Mission Control is a Next.js + TypeScript platform that helps our team:
@@ -20,6 +22,13 @@ FrontierDispatch Mission Control is a Next.js + TypeScript platform that helps o
 ## 2-Minute Judge Path
 
 Follow [`DEMO.md`](./DEMO.md) and start at `/demo`.
+
+## Detailed Requirements Coverage
+
+For an explicit, requirement-by-requirement evidence matrix (routes, APIs, repo paths,
+hosting proof, domain proof, and submission artifact checklist), use:
+
+- [`docs/mlh-requirements.md`](./docs/mlh-requirements.md)
 
 ## Sponsor Proof Map
 
@@ -112,6 +121,7 @@ Defined in `/apps/web/.env.example`:
 ## Docs
 
 - Judge proof checklist: [`docs/judge-proof.md`](./docs/judge-proof.md)
+- Detailed requirements/evidence guide: [`docs/mlh-requirements.md`](./docs/mlh-requirements.md)
 - Demo flow: [`DEMO.md`](./DEMO.md)
 - DigitalOcean deploy: [`docs/deploy.md`](./docs/deploy.md)
 - Smalltalk integration details: [`docs/smalltalk-integration.md`](./docs/smalltalk-integration.md)

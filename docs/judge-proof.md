@@ -2,6 +2,9 @@
 
 Use this checklist during judging to verify each sponsor requirement quickly.
 
+For full requirement mapping and submission artifact guidance, see:
+`docs/mlh-requirements.md`.
+
 ## Gemini API
 
 - UI: `/dispatch`
@@ -52,3 +55,10 @@ Use this checklist during judging to verify each sponsor requirement quickly.
 ## Recommended Judge Click Path
 
 `/demo -> /dispatch -> /telegraph -> /ledger -> /dashboard -> /mission-control -> /proof`
+
+## Production Hosting Verification
+
+- Open `https://frontierdispatch.tech` and confirm homepage loads over HTTPS.
+- Open `https://frontierdispatch.tech/api/health` and confirm `status: "ok"`.
+- Open `https://frontierdispatch.tech/demo` and complete the flow above.
+- Confirm this deployment is documented in `docs/deploy.md`.

@@ -48,6 +48,29 @@ After deployment:
 - Run the full `/demo` flow.
 - Verify `/proof` page checklist links and endpoints.
 
+## 5) Troubleshooting: "All integrations show Not configured"
+
+If `/api/health` returns all `false` in production:
+
+1. Open DigitalOcean App Platform -> your app -> `Settings`.
+2. Select the web service component (`apps/web` deployment target).
+3. Open `Environment Variables`.
+4. Confirm required keys exist and are set for runtime (or run+build).
+5. Save changes and redeploy.
+6. Re-check `/api/health`.
+
+Common cause:
+
+- Variables exist in local `.env` but were never added to DigitalOcean runtime scope.
+
+Fast validation:
+
+- Local: `http://localhost:3000/api/health`
+- Production: `https://frontierdispatch.tech/api/health`
+
+If local is configured and production is not, this is a platform env configuration issue,
+not an application logic issue.
+
 ## Deployment Evidence Checklist
 
 - App creation settings screenshot
