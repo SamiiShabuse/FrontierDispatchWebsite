@@ -65,8 +65,14 @@ Quick test payload example:
 
 ## LabWare Smalltalk
 
-- Scripts: `/smalltalk/ContractGenerator.st`, `/smalltalk/EventModel.st`
-- Generated data consumed by app: `/apps/web/public/data/contracts.json`, `/apps/web/public/data/risks.json`
+- Scripts: `/smalltalk/ContractGenerator.st`, `/smalltalk/EventModel.st`, `/smalltalk/ScenarioGenerator.st`, `/smalltalk/DataPipeline.st`
+- Generated data consumed by app: `/apps/web/public/data/contracts.json`, `/apps/web/public/data/risks.json`, `/apps/web/public/data/scenarios.json`
+- Validation artifact: `/smalltalk/model-validation.json`
+- Verify:
+  - open `/dispatch` and confirm generated model-driven contract/risk context
+  - open `/log-run` and confirm contract presets are available as generated quick-select data
+  - confirm generator scripts and generated outputs match in structure
+- Details: `/docs/smalltalk-integration.md`
 
 ## Recommended Judge Click Path
 

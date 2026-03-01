@@ -1,0 +1,26 @@
+[
+  {
+    "id": "S-001",
+    "name": "Desert Night Relay",
+    "weather": "sandwind",
+    "enemyPressure": 0.62,
+    "recommendedRoute": "balanced",
+    "payoutMultiplier": 1.08
+  },
+  {
+    "id": "S-002",
+    "name": "Mountain Whiteout Escort",
+    "weather": "snow",
+    "enemyPressure": 0.71,
+    "recommendedRoute": "long-safe",
+    "payoutMultiplier": 1.18
+  },
+  {
+    "id": "S-003",
+    "name": "Rail Junction Hot Zone",
+    "weather": "clear",
+    "enemyPressure": 0.83,
+    "recommendedRoute": "short-risky",
+    "payoutMultiplier": 1.27
+  }
+]

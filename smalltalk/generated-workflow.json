@@ -2,11 +2,15 @@
   "workflow": "smalltalk-to-next-public-data",
   "inputs": [
     "ContractGenerator.st",
-    "EventModel.st"
+    "EventModel.st",
+    "ScenarioGenerator.st",
+    "DataPipeline.st"
   ],
   "outputs": [
     "../apps/web/public/data/contracts.json",
-    "../apps/web/public/data/risks.json"
+    "../apps/web/public/data/risks.json",
+    "../apps/web/public/data/scenarios.json",
+    "model-validation.json"
   ],
-  "notes": "Run in Pharo or Squeak, then commit generated JSON."
+  "notes": "Run in Pharo or Squeak, then commit generated JSON and validation report."
 }

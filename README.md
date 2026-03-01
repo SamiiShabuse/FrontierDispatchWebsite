@@ -47,9 +47,34 @@ Follow [`DEMO.md`](./DEMO.md) and start at `/demo`.
 - **.Tech domain**
   - Primary domain and branding in app metadata/docs: `frontierdispatch.tech`
 - **LabWare Smalltalk**
-  - Scripts: `/smalltalk/ContractGenerator.st`, `/smalltalk/EventModel.st`
+  - Scripts: `/smalltalk/ContractGenerator.st`, `/smalltalk/EventModel.st`, `/smalltalk/ScenarioGenerator.st`, `/smalltalk/DataPipeline.st`
   - Guide: `/smalltalk/README_SMALLTALK.md`
-  - Generated data used by app: `/apps/web/public/data/contracts.json`, `/apps/web/public/data/risks.json`
+  - Generated data used by app: `/apps/web/public/data/contracts.json`, `/apps/web/public/data/risks.json`, `/apps/web/public/data/scenarios.json`
+
+## Smalltalk in Production Flow
+
+Smalltalk is a first-class part of FrontierDispatch's runtime data pipeline:
+
+1. **Generate mission models in Smalltalk**
+   - `FDContractGenerator` defines contract presets
+   - `FDEventModel` defines risk/event modeling
+   - `FDScenarioGenerator` defines scenario balancing presets
+   - `FDDataPipeline` exports all artifacts and validates model quality
+2. **Export to web-consumable JSON**
+   - `/apps/web/public/data/contracts.json`
+   - `/apps/web/public/data/risks.json`
+   - `/apps/web/public/data/scenarios.json`
+   - `/smalltalk/model-validation.json`
+3. **Consume in app features**
+   - `/dispatch` uses generated model context for AI planning
+   - `/log-run` uses generated contract presets for telemetry input
+   - `/simulator` aligns balancing workflows with generated risk/scenario data
+4. **Provide judge-verifiable evidence**
+   - generator source in `/smalltalk/*.st`
+   - generated artifacts under `/apps/web/public/data`
+   - validation report in `/smalltalk/model-validation.json`
+
+Detailed integration doc: [`docs/smalltalk-integration.md`](./docs/smalltalk-integration.md)
 
 ## Repo Layout
 
@@ -95,3 +120,4 @@ Defined in `/apps/web/.env.example`:
 - Judge proof checklist: [`docs/judge-proof.md`](./docs/judge-proof.md)
 - Demo flow: [`DEMO.md`](./DEMO.md)
 - DigitalOcean deploy: [`docs/deploy.md`](./docs/deploy.md)
+- Smalltalk integration details: [`docs/smalltalk-integration.md`](./docs/smalltalk-integration.md)
