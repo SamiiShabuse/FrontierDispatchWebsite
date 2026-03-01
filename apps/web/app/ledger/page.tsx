@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Buffer } from "buffer";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
@@ -16,6 +16,7 @@ const MEMO_PROGRAM_ID = new PublicKey(
 export default function LedgerPage() {
   const { connection } = useConnection();
   const wallet = useWallet();
+  const [phantomInstalled, setPhantomInstalled] = useState(false);
 
   const [towns, setTowns] = useState("Tombstone,Deadwood");
   const [onTime, setOnTime] = useState(true);
@@ -29,6 +30,37 @@ export default function LedgerPage() {
     if (!signature) return "";
     return `https://explorer.solana.com/tx/${signature}?cluster=devnet`;
   }, [signature]);
+
+  useEffect(() => {
+    const isInstalled = Boolean(
+      (
+        window as Window & {
+          solana?: { isPhantom?: boolean };
+        }
+      ).solana?.isPhantom,
+    );
+    setPhantomInstalled(isInstalled);
+  }, []);
+
+  async function connectWallet() {
+    try {
+      if (!phantomInstalled) {
+        toast.error("Phantom extension not detected in this browser profile.");
+        return;
+      }
+      if (!wallet.wallet) {
+        wallet.select("Phantom");
+      }
+      await wallet.connect();
+      toast.success("Phantom connected.");
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Failed to connect Phantom wallet",
+      );
+    }
+  }
 
   async function mintProof() {
     if (!wallet.publicKey || !wallet.sendTransaction) {
@@ -79,6 +111,18 @@ export default function LedgerPage() {
 
       <section className="fd-card space-y-4">
         <h1 className="text-2xl font-bold">Proof-of-Delivery Ledger</h1>
+        <div className="rounded-md border border-white/20 bg-white/5 p-3 text-sm text-[var(--muted)]">
+          <p>Wallet status: {wallet.connected ? "Connected" : "Not connected"}</p>
+          {!phantomInstalled && (
+            <p className="mt-1 text-yellow-200">
+              Phantom extension is not detected. Install Phantom and use
+              `localhost` URL (not network IP) in the same browser profile.
+            </p>
+          )}
+        </div>
+        <button onClick={connectWallet} className="fd-button-secondary w-fit">
+          Connect Phantom Wallet
+        </button>
         <WalletMultiButton />
         <label className="block space-y-1 text-sm">
           <span>Run ID</span>

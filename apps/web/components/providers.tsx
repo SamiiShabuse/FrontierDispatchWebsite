@@ -18,7 +18,7 @@ export function Providers({ children }: Props) {
 
   return (
     <ConnectionProvider endpoint={endpoint}>
-      <WalletProvider wallets={wallets} autoConnect>
+      <WalletProvider wallets={wallets} autoConnect={false}>
         <WalletModalProvider>
           {children}
           <Toaster richColors position="top-right" />
