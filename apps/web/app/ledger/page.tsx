@@ -120,10 +120,12 @@ export default function LedgerPage() {
             </p>
           )}
         </div>
-        <button onClick={connectWallet} className="fd-button-secondary w-fit">
-          Connect Phantom Wallet
-        </button>
-        <WalletMultiButton />
+        <div className="flex flex-col items-start gap-2">
+          <button onClick={connectWallet} className="fd-button-secondary w-fit">
+            Connect Phantom Wallet
+          </button>
+          <WalletMultiButton className="!h-10 !rounded-lg !bg-[#512da8] !px-4 !text-sm !font-semibold hover:!brightness-110" />
+        </div>
         <label className="block space-y-1 text-sm">
           <span>Run ID</span>
           <input className="fd-input" value={runId} onChange={(e) => setRunId(e.target.value)} />
