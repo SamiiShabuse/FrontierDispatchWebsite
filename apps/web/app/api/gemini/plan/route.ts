@@ -2,7 +2,57 @@ import { NextRequest, NextResponse } from "next/server";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { dispatchRequestSchema, trimDangerousPrompt } from "@/lib/validators";
 
-const GEMINI_MODEL = "gemini-2.0-flash";
+const GEMINI_MODELS = ["gemini-2.5-flash", "gemini-1.5-flash"] as const;
+
+async function requestGeminiPlan(prompt: string, apiKey: string) {
+  let lastErrorMessage = "Gemini request failed";
+
+  for (const model of GEMINI_MODELS) {
+    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+    const response = await fetch(geminiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: {
+          temperature: 0.3,
+          maxOutputTokens: 700,
+        },
+      }),
+    });
+
+    if (response.ok) {
+      const data = (await response.json()) as {
+        candidates?: Array<{
+          content?: { parts?: Array<{ text?: string }> };
+        }>;
+      };
+      const planText =
+        data.candidates?.[0]?.content?.parts
+          ?.map((part) => part.text ?? "")
+          .join("\n") ?? "";
+
+      if (planText.trim()) {
+        return { ok: true as const, planText, model };
+      }
+      lastErrorMessage = `Gemini model ${model} returned empty output`;
+      continue;
+    }
+
+    const message = await response.text();
+    lastErrorMessage = `Gemini ${model} failed: ${message.slice(0, 240)}`;
+
+    // If quota is exceeded on this model, try fallback model.
+    if (response.status === 429) {
+      continue;
+    }
+
+    // For non-429 errors, stop early and return the actual upstream failure.
+    return { ok: false as const, error: lastErrorMessage, status: 500 };
+  }
+
+  return { ok: false as const, error: lastErrorMessage, status: 429 };
+}
 
 export async function POST(request: NextRequest) {
   const ip =
@@ -46,47 +96,24 @@ Game State JSON:
 ${JSON.stringify(payload, null, 2)}
 `);
 
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${process.env.GEMINI_API_KEY}`;
-    const response = await fetch(geminiUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: {
-          temperature: 0.3,
-          maxOutputTokens: 700,
+    const result = await requestGeminiPlan(prompt, process.env.GEMINI_API_KEY);
+    if (!result.ok) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error:
+            result.status === 429
+              ? "Gemini quota exceeded for available models. Check AI Studio/GCP billing + quota, then retry."
+              : result.error,
         },
-      }),
-    });
-
-    if (!response.ok) {
-      const message = await response.text();
-      return NextResponse.json(
-        { ok: false, error: `Gemini request failed: ${message.slice(0, 180)}` },
-        { status: 500 },
-      );
-    }
-
-    const data = (await response.json()) as {
-      candidates?: Array<{
-        content?: { parts?: Array<{ text?: string }> };
-      }>;
-    };
-    const planText =
-      data.candidates?.[0]?.content?.parts?.map((part) => part.text ?? "").join("\n") ??
-      "";
-
-    if (!planText.trim()) {
-      return NextResponse.json(
-        { ok: false, error: "Gemini returned empty plan" },
-        { status: 500 },
+        { status: result.status },
       );
     }
 
     return NextResponse.json({
       ok: true,
-      planText,
-      structuredPlan: { routeChoice: payload.routeChoice },
+      planText: result.planText,
+      structuredPlan: { routeChoice: payload.routeChoice, model: result.model },
     });
   } catch (error) {
     return NextResponse.json(
