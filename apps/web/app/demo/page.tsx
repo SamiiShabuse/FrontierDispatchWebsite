@@ -29,7 +29,13 @@ const steps = [
       "Updated run count, on-time rate, most common event, and runs-over-time table.",
   },
   {
-    title: "5. Open Judge Proof Hub",
+    title: "5. Open Mission Control",
+    href: "/mission-control",
+    shouldSee:
+      "Current run context status plus recent telemetry table proving continuity across the mission pipeline.",
+  },
+  {
+    title: "6. Open Judge Proof Hub",
     href: "/proof",
     shouldSee:
       "Sponsor-by-sponsor verification list with page routes and expected evidence.",

@@ -1,6 +1,7 @@
 import { RunTelemetryInput, TelemetrySummary } from "@/lib/types";
 import {
   insertTelemetryToSnowflake,
+  queryRecentRunsFromSnowflake,
   queryTelemetrySummaryFromSnowflake,
   snowflakeConfiguredFlag,
 } from "@/lib/snowflake";
@@ -92,6 +93,21 @@ export async function getTelemetrySummary() {
       ...result,
       configured: snowflakeConfiguredFlag(),
       summary: summarizeRuns(fallbackRuns),
+    };
+  }
+  return result;
+}
+
+export async function getRecentRuns(limit = 8) {
+  const clampedLimit = Math.max(1, Math.min(limit, 50));
+  const result = await queryRecentRunsFromSnowflake(clampedLimit);
+  if (!result.configured || !result.runs) {
+    return {
+      ...result,
+      configured: snowflakeConfiguredFlag(),
+      runs: [...fallbackRuns]
+        .sort((a, b) => (a.created_at ?? "").localeCompare(b.created_at ?? "") * -1)
+        .slice(0, clampedLimit),
     };
   }
   return result;

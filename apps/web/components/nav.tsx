@@ -11,6 +11,7 @@ const navItems = [
   { href: "/copilot", label: "Luau Copilot" },
   { href: "/log-run", label: "Log Run" },
   { href: "/dashboard", label: "Dashboard" },
+  { href: "/mission-control", label: "Mission Control" },
   { href: "/proof", label: "Proof" },
   { href: "/about", label: "About" },
 ];

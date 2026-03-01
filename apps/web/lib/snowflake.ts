@@ -198,6 +198,125 @@ export async function queryTelemetrySummaryFromSnowflake(): Promise<
   };
 }
 
+type RecentRunsResult = SnowflakeResult & { runs?: RunTelemetryInput[] };
+
+function parseJsonArray(value: unknown): string[] {
+  if (Array.isArray(value)) {
+    return value.map((item) => String(item));
+  }
+  if (typeof value === "string") {
+    try {
+      const parsed = JSON.parse(value) as unknown;
+      return Array.isArray(parsed) ? parsed.map((item) => String(item)) : [];
+    } catch {
+      return [];
+    }
+  }
+  return [];
+}
+
+function parseJsonRecord(value: unknown): Record<string, number> {
+  if (value && typeof value === "object" && !Array.isArray(value)) {
+    return Object.fromEntries(
+      Object.entries(value as Record<string, unknown>).map(([key, raw]) => [
+        key,
+        Number(raw ?? 0),
+      ]),
+    );
+  }
+  if (typeof value === "string") {
+    try {
+      const parsed = JSON.parse(value) as unknown;
+      if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+        return Object.fromEntries(
+          Object.entries(parsed as Record<string, unknown>).map(([key, raw]) => [
+            key,
+            Number(raw ?? 0),
+          ]),
+        );
+      }
+      return {};
+    } catch {
+      return {};
+    }
+  }
+  return {};
+}
+
+export async function queryRecentRunsFromSnowflake(limit: number): Promise<RecentRunsResult> {
+  if (!isSnowflakeConfigured()) {
+    return {
+      configured: false,
+      reason: "Snowflake not configured",
+      mode: "local-dev-fallback",
+    };
+  }
+
+  const rows = await execute<{
+    ID: string;
+    CREATED_AT: string;
+    RUN_ID: string;
+    CONTRACTS: unknown;
+    TOWNS: unknown;
+    ROUTE_CHOICE: string;
+    EVENTS: unknown;
+    ON_TIME: boolean | number;
+    PAYOUT: number;
+    TOWN_STABILITY_DELTA: unknown;
+    SOURCE: string;
+    SOLANA_SIGNATURE: string;
+    VOICE_ID: string;
+    PLAN_PREVIEW: string;
+    RISK_SCORE: number;
+  }>(
+    `SELECT
+        id,
+        TO_VARCHAR(created_at, 'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"') AS created_at,
+        run_id,
+        contracts,
+        towns,
+        route_choice,
+        events,
+        on_time,
+        payout,
+        town_stability_delta,
+        source,
+        solana_signature,
+        voice_id,
+        plan_preview,
+        risk_score
+      FROM RUNS
+      ORDER BY created_at DESC
+      LIMIT ?`,
+    [limit],
+  );
+
+  return {
+    configured: true,
+    mode: "snowflake",
+    runs: rows.map((row) => ({
+      id: row.ID,
+      created_at: row.CREATED_AT,
+      run_id: row.RUN_ID || undefined,
+      contracts: parseJsonArray(row.CONTRACTS),
+      towns: parseJsonArray(row.TOWNS),
+      route_choice: row.ROUTE_CHOICE,
+      events: parseJsonArray(row.EVENTS),
+      on_time: Boolean(row.ON_TIME),
+      payout: Number(row.PAYOUT ?? 0),
+      town_stability_delta: parseJsonRecord(row.TOWN_STABILITY_DELTA),
+      source:
+        row.SOURCE === "ledger-auto" || row.SOURCE === "roblox-opencloud"
+          ? row.SOURCE
+          : "manual",
+      solana_signature: row.SOLANA_SIGNATURE || undefined,
+      voice_id: row.VOICE_ID || undefined,
+      plan_preview: row.PLAN_PREVIEW || undefined,
+      risk_score: typeof row.RISK_SCORE === "number" ? row.RISK_SCORE : undefined,
+    })),
+  };
+}
+
 export function snowflakeConfiguredFlag() {
   return isSnowflakeConfigured();
 }
