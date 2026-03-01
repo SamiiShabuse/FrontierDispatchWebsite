@@ -12,7 +12,8 @@
    - source breakdown includes `ledger-auto` or `roblox-opencloud`
    - chain-proof rate is visible
 7. Open **Mission Control** and verify current run continuity + recent telemetry list.
-8. Open **Proof Hub** and verify each sponsor checklist item.
+8. Open **Ingest Lab**, send a signed test ingest, and refresh Dashboard source breakdown.
+9. Open **Proof Hub** and verify each sponsor checklist item.
 
 ## Expected outputs
 

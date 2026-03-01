@@ -28,8 +28,8 @@ const proofItems = [
   {
     track: "Roblox Open Cloud",
     route: "/api/roblox/telemetry/ingest",
-    page: "/proof",
-    check: "Send signed ingest payload and verify dashboard source split.",
+    page: "/ingest-lab",
+    check: "Send signed ingest payload in Ingest Lab and verify dashboard source split.",
   },
   {
     track: "Smalltalk",

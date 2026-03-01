@@ -13,6 +13,7 @@ FrontierDispatch Mission Control is a Next.js + TypeScript platform that helps o
 - mint Solana proof-of-delivery receipts (`/ledger`)
 - ingest + analyze telemetry via Snowflake (`/dashboard`)
 - monitor active run continuity + recent telemetry (`/mission-control`)
+- test signed Roblox Open Cloud payloads (`/ingest-lab`)
 - run balancing simulations (`/simulator`)
 - generate Luau mission scaffolding (`/copilot`)
 - verify all sponsor categories quickly (`/proof`)
@@ -39,6 +40,7 @@ Follow [`DEMO.md`](./DEMO.md) and start at `/demo`.
   - SQL schema: `/snowflake/schema.sql`
 - **Roblox telemetry ingest**
   - API: `/apps/web/app/api/roblox/telemetry/ingest/route.ts`
+  - Test UI: `/apps/web/app/ingest-lab/page.tsx`
   - Auth helper: `/apps/web/lib/roblox-opencloud.ts`
 - **DigitalOcean**
   - Deploy guide: `/docs/deploy.md`

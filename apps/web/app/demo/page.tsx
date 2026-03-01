@@ -35,7 +35,13 @@ const steps = [
       "Current run context status plus recent telemetry table proving continuity across the mission pipeline.",
   },
   {
-    title: "6. Open Judge Proof Hub",
+    title: "6. Send Roblox Ingest Test",
+    href: "/ingest-lab",
+    shouldSee:
+      "Signed ingest request accepted and reflected as roblox-opencloud telemetry source.",
+  },
+  {
+    title: "7. Open Judge Proof Hub",
     href: "/proof",
     shouldSee:
       "Sponsor-by-sponsor verification list with page routes and expected evidence.",
