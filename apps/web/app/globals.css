@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: #09101a;
-  --foreground: #f5f8ff;
-  --card: #131f31;
-  --card-2: #1a2a44;
-  --muted: #9db2ce;
-  --accent: #e8b34b;
-  --accent-2: #56b2ff;
+  --background: #0a0816;
+  --foreground: #f3f0ff;
+  --card: #14102a;
+  --card-2: #20174a;
+  --muted: #b5acd7;
+  --accent: #c9a6ff;
+  --accent-2: #7dc9ff;
   --success: #4ade80;
   --danger: #f97373;
 }
@@ -20,7 +20,10 @@
 }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(circle at 15% -10%, rgba(125, 201, 255, 0.14), transparent 42%),
+    radial-gradient(circle at 85% 0%, rgba(201, 166, 255, 0.2), transparent 35%),
+    var(--background);
   color: var(--foreground);
 }
 
@@ -37,7 +40,7 @@ a {
 }
 
 .fd-button {
-  @apply inline-flex items-center justify-center rounded-lg bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-slate-900 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70;
+  @apply inline-flex items-center justify-center rounded-lg bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-[#1f1138] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70;
 }
 
 .fd-button-secondary {

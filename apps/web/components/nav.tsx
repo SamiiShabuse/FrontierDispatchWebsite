@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -15,8 +16,19 @@ export function SiteNav() {
   return (
     <header className="sticky top-0 z-20 border-b border-white/10 bg-[var(--background)]/90 backdrop-blur">
       <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3 md:px-6">
-        <Link href="/" className="font-semibold tracking-wide text-white">
-          FrontierDispatch.tech
+        <Link
+          href="/"
+          className="flex items-center gap-2 rounded-md px-2 py-1 text-white transition hover:bg-white/10"
+        >
+          <Image
+            src="https://media.discordapp.net/attachments/1477337414971428954/1477521362057695333/logo.png?ex=69a5107f&is=69a3beff&hm=5741a70d7b2c3736c2e0dfaf6cbbd1a8a520d72b0e37d10cc4fb8cd0be6d2adf&=&format=webp&quality=lossless&width=1382&height=922"
+            alt="FrontierDispatch logo"
+            width={34}
+            height={34}
+            className="h-8 w-8 rounded-md object-contain"
+            priority
+          />
+          <span className="font-semibold tracking-wide">FrontierDispatch.tech</span>
         </Link>
         <nav className="flex flex-wrap items-center gap-2 text-sm text-[var(--muted)]">
           {navItems.map((item) => (
