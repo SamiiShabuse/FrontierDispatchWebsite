@@ -49,7 +49,14 @@ export default function LedgerPage() {
         return;
       }
       if (!wallet.wallet) {
-        wallet.select("Phantom");
+        const phantomWallet = wallet.wallets.find(
+          (availableWallet) => availableWallet.adapter.name === "Phantom",
+        );
+        if (!phantomWallet) {
+          toast.error("Phantom wallet adapter is not available.");
+          return;
+        }
+        wallet.select(phantomWallet.adapter.name);
       }
       await wallet.connect();
       toast.success("Phantom connected.");
