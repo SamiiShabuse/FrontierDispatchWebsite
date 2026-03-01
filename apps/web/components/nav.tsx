@@ -7,8 +7,11 @@ const navItems = [
   { href: "/dispatch", label: "Dispatch AI" },
   { href: "/telegraph", label: "Telegraph Voice" },
   { href: "/ledger", label: "Ledger" },
+  { href: "/simulator", label: "Simulator" },
+  { href: "/copilot", label: "Luau Copilot" },
   { href: "/log-run", label: "Log Run" },
   { href: "/dashboard", label: "Dashboard" },
+  { href: "/proof", label: "Proof" },
   { href: "/about", label: "About" },
 ];
 

@@ -18,6 +18,11 @@ function summarizeRuns(runs: RunTelemetryInput[]): TelemetrySummary {
   const eventCounter = new Map<string, number>();
   const townCounter: Record<string, { sum: number; count: number }> = {};
   const overTimeMap = new Map<string, number>();
+  const sourceCounter = new Map<string, number>();
+  const routeCounter = new Map<string, number>();
+  const withProof = runs.filter((run) => Boolean(run.solana_signature?.trim())).length;
+  let riskScoreTotal = 0;
+  let riskScoreCount = 0;
 
   for (const run of runs) {
     for (const event of run.events) {
@@ -29,6 +34,13 @@ function summarizeRuns(runs: RunTelemetryInput[]): TelemetrySummary {
     });
     const day = (run.created_at ?? new Date().toISOString()).slice(0, 10);
     overTimeMap.set(day, (overTimeMap.get(day) ?? 0) + 1);
+    const source = run.source ?? "manual";
+    sourceCounter.set(source, (sourceCounter.get(source) ?? 0) + 1);
+    routeCounter.set(run.route_choice, (routeCounter.get(run.route_choice) ?? 0) + 1);
+    if (typeof run.risk_score === "number") {
+      riskScoreTotal += run.risk_score;
+      riskScoreCount += 1;
+    }
   }
 
   const mostCommonEvent =
@@ -52,6 +64,16 @@ function summarizeRuns(runs: RunTelemetryInput[]): TelemetrySummary {
     mostCommonEvent,
     townStabilityAverages,
     runsOverTime,
+    sourceBreakdown: [...sourceCounter.entries()].map(([source, count]) => ({
+      source,
+      count,
+    })),
+    chainProofRate: totalRuns ? Number(((withProof / totalRuns) * 100).toFixed(2)) : 0,
+    averageRiskScore: riskScoreCount ? Number((riskScoreTotal / riskScoreCount).toFixed(2)) : 0,
+    routeChoiceBreakdown: [...routeCounter.entries()].map(([route, count]) => ({
+      route,
+      count,
+    })),
   };
 }
 

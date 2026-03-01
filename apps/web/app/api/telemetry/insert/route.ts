@@ -17,6 +17,7 @@ export async function POST(request: NextRequest) {
     const result = await insertRun({
       id: input.id ?? crypto.randomUUID(),
       created_at: input.created_at ?? new Date().toISOString(),
+      run_id: input.run_id,
       contracts: input.contracts,
       towns: input.towns,
       route_choice: input.route_choice,
@@ -24,6 +25,11 @@ export async function POST(request: NextRequest) {
       on_time: input.on_time,
       payout: input.payout,
       town_stability_delta: input.town_stability_delta,
+      source: input.source ?? "manual",
+      solana_signature: input.solana_signature,
+      voice_id: input.voice_id,
+      plan_preview: input.plan_preview,
+      risk_score: input.risk_score,
     });
 
     return NextResponse.json({

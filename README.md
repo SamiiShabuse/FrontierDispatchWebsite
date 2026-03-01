@@ -1,84 +1,79 @@
 # FrontierDispatch Mission Control
 
-Official website + API + sponsor proof hub for the FrontierDispatch Roblox game.
+Official web platform for developing and proving FrontierDispatch Roblox systems.
 
 Live domain: **https://frontierdispatch.tech**
 
-## Project Overview
+## What this project does
 
-FrontierDispatch is an infrastructure and logistics strategy game on Roblox.  
-This repository contains the official web mission-control portal used for:
+FrontierDispatch Mission Control is a Next.js + TypeScript platform that helps our team:
 
-- Morning Dispatch planning with Gemini
-- Telegraph-style voice briefings with ElevenLabs
-- Run telemetry logging + analytics with Snowflake
-- Proof-of-delivery receipts on Solana devnet
-- Deployment on DigitalOcean App Platform
+- plan missions with Gemini (`/dispatch`)
+- generate telegraph briefings with ElevenLabs (`/telegraph`)
+- mint Solana proof-of-delivery receipts (`/ledger`)
+- ingest + analyze telemetry via Snowflake (`/dashboard`)
+- run balancing simulations (`/simulator`)
+- generate Luau mission scaffolding (`/copilot`)
+- verify all sponsor categories quickly (`/proof`)
 
-Smalltalk is used to generate the contract/risk data models consumed by the site.
+## 2-Minute Judge Path
 
-## Links
+Follow [`DEMO.md`](./DEMO.md) and start at `/demo`.
 
-- Live site: `https://frontierdispatch.tech`
-- Roblox game: `ROBLOX_GAME_URL`
-- Devpost: `DEVPOST_URL`
-- GitHub: `GITHUB_REPO_URL`
+## Sponsor Proof Map
 
-## 2-Minute Demo Path
-
-Follow: [`DEMO.md`](./DEMO.md)
-
-## Sponsor Qualification Checklist (with file paths)
-
-- Best Use of Gemini API
-  - UI: `/apps/web/app/dispatch`
-  - API route: `/apps/web/app/api/gemini/plan/route.ts`
-- Best Use of ElevenLabs
-  - UI: `/apps/web/app/telegraph`
-  - API route: `/apps/web/app/api/elevenlabs/tts/route.ts`
-- Best Use of Solana
-  - UI + wallet adapter: `/apps/web/app/ledger` + wallet adapter usage
-  - Provider setup: `/apps/web/components/providers.tsx`
-- Best Use of Snowflake API
-  - Dashboard UI: `/apps/web/app/dashboard`
-  - Telemetry routes: `/apps/web/app/api/telemetry/*`
+- **Gemini API**
+  - UI: `/apps/web/app/dispatch/page.tsx`
+  - API: `/apps/web/app/api/gemini/plan/route.ts`
+  - Luau copilot API: `/apps/web/app/api/gemini/luau/route.ts`
+- **ElevenLabs**
+  - UI: `/apps/web/app/telegraph/page.tsx`
+  - API: `/apps/web/app/api/elevenlabs/tts/route.ts`
+- **Solana**
+  - UI + mint flow: `/apps/web/app/ledger/page.tsx`
+  - Wallet providers: `/apps/web/components/providers.tsx`
+- **Snowflake**
+  - APIs: `/apps/web/app/api/telemetry/insert/route.ts`, `/apps/web/app/api/telemetry/summary/route.ts`
+  - Storage integration: `/apps/web/lib/snowflake.ts`
   - SQL schema: `/snowflake/schema.sql`
-- Best Use of DigitalOcean
-  - Deployment guide: `/docs/deploy.md`
-- Best .Tech Domain Name
-  - Domain usage in app + docs: `frontierdispatch.tech`
-- LabWare Smalltalk Mini Category
-  - Scripts + instructions: `/smalltalk/README_SMALLTALK.md`, `/smalltalk/ContractGenerator.st`, `/smalltalk/EventModel.st`
-  - Generated JSON consumed by website:
-    - `/apps/web/public/data/contracts.json`
-    - `/apps/web/public/data/risks.json`
+- **Roblox telemetry ingest**
+  - API: `/apps/web/app/api/roblox/telemetry/ingest/route.ts`
+  - Auth helper: `/apps/web/lib/roblox-opencloud.ts`
+- **DigitalOcean**
+  - Deploy guide: `/docs/deploy.md`
+- **.Tech domain**
+  - Primary domain and branding in app metadata/docs: `frontierdispatch.tech`
+- **LabWare Smalltalk**
+  - Scripts: `/smalltalk/ContractGenerator.st`, `/smalltalk/EventModel.st`
+  - Guide: `/smalltalk/README_SMALLTALK.md`
+  - Generated data used by app: `/apps/web/public/data/contracts.json`, `/apps/web/public/data/risks.json`
 
-## Repository Structure
+## Repo Layout
 
-- `/apps/web` - Next.js App Router website + API routes
-- `/smalltalk` - Smalltalk scripts and generation workflow
-- `/snowflake` - SQL schema and sample analytics queries
-- `/solana` - Solana memo receipt notes/scripts
-- `/docs` - Deployment/runbook docs
-- `/scripts` - helper scripts
+- `/apps/web` Next.js app + API routes
+- `/smalltalk` Smalltalk model generators
+- `/snowflake` schema + analytics queries
+- `/solana` Solana notes
+- `/docs` deploy and proof docs
+- `/scripts` local setup scripts
 
 ## Local Setup
 
-1. Install Node 20+.
-2. Copy `apps/web/.env.example` to `apps/web/.env.local`.
-3. Fill required keys.
+1. `cd apps/web`
+2. `cp .env.example .env.local` (PowerShell: `Copy-Item .env.example .env.local`)
+3. Fill env vars.
 4. Run:
-   - `cd apps/web`
    - `npm install`
    - `npm run dev`
 5. Open `http://localhost:3000/demo`.
 
-## Environment Variables
+## Required Environment Variables
 
 Defined in `/apps/web/.env.example`:
 
 - `NEXT_PUBLIC_SITE_URL`
 - `ROBLOX_GAME_URL`
+- `ROBLOX_INGEST_SHARED_SECRET`
 - `GEMINI_API_KEY`
 - `ELEVENLABS_API_KEY`
 - `ELEVENLABS_VOICE_ID_DEFAULT`
@@ -92,10 +87,8 @@ Defined in `/apps/web/.env.example`:
 - `SOLANA_RPC_URL`
 - `NEXT_PUBLIC_SOLANA_RPC_URL`
 
-## Troubleshooting
+## Docs
 
-- **Gemini not configured**: set `GEMINI_API_KEY`, restart dev server.
-- **ElevenLabs not configured**: set `ELEVENLABS_API_KEY`.
-- **Snowflake not configured**: set all Snowflake vars; local fallback mode is enabled for dev-only demo continuity.
-- **Wallet not connected**: install Phantom and connect on `/ledger`.
-- **Build/deploy errors on DO**: verify App Platform env vars in `/docs/deploy.md`.
+- Judge proof checklist: [`docs/judge-proof.md`](./docs/judge-proof.md)
+- Demo flow: [`DEMO.md`](./DEMO.md)
+- DigitalOcean deploy: [`docs/deploy.md`](./docs/deploy.md)

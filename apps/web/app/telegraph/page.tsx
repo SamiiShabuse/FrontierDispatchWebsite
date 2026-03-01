@@ -1,9 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { JudgeProof } from "@/components/judge-proof";
 import { TrackCallout } from "@/components/track-callout";
+import { readRunContext, updateRunContext } from "@/lib/run-context";
 
 type TtsResponse = {
   ok: boolean;
@@ -26,6 +28,11 @@ export default function TelegraphPage() {
   const [mimeType, setMimeType] = useState("audio/mpeg");
 
   useEffect(() => {
+    const context = readRunContext();
+    if (context?.planText) {
+      setText(context.planText);
+      return;
+    }
     const savedPlan = localStorage.getItem("frontier_latest_plan");
     if (savedPlan) {
       setText(savedPlan);
@@ -54,6 +61,13 @@ export default function TelegraphPage() {
 
       setAudioBase64(data.audioBase64);
       setMimeType(data.mimeType);
+      updateRunContext({
+        voice: {
+          voiceId,
+          urgency,
+          generatedAt: new Date().toISOString(),
+        },
+      });
       toast.success("Voice briefing generated.");
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Unknown error");
@@ -127,9 +141,14 @@ export default function TelegraphPage() {
       <section className="fd-card">
         <h2 className="text-xl font-semibold">Audio Output</h2>
         {audioSrc ? (
-          <audio controls className="mt-3 w-full">
-            <source src={audioSrc} type={mimeType} />
-          </audio>
+          <>
+            <audio controls className="mt-3 w-full">
+              <source src={audioSrc} type={mimeType} />
+            </audio>
+            <Link href="/ledger" className="mt-4 inline-flex fd-button-secondary">
+              Continue to Solana Ledger
+            </Link>
+          </>
         ) : (
           <p className="mt-2 text-sm text-[var(--muted)]">
             Generated audio appears here.

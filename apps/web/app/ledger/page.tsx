@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { Buffer } from "buffer";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
@@ -8,6 +9,7 @@ import { PublicKey, Transaction, TransactionInstruction } from "@solana/web3.js"
 import { toast } from "sonner";
 import { JudgeProof } from "@/components/judge-proof";
 import { TrackCallout } from "@/components/track-callout";
+import { readRunContext, updateRunContext } from "@/lib/run-context";
 
 const MEMO_PROGRAM_ID = new PublicKey(
   "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr",
@@ -40,6 +42,17 @@ export default function LedgerPage() {
       ).solana?.isPhantom,
     );
     setPhantomInstalled(isInstalled);
+
+    const runContext = readRunContext();
+    if (runContext) {
+      setRunId(runContext.runId);
+      if (runContext.towns.length) {
+        setTowns(runContext.towns.join(","));
+      }
+      if (runContext.events.length) {
+        setEvents(runContext.events.join(","));
+      }
+    }
   }, []);
 
   async function connectWallet() {
@@ -95,6 +108,56 @@ export default function LedgerPage() {
       const txSignature = await wallet.sendTransaction(transaction, connection);
       await connection.confirmTransaction(txSignature, "confirmed");
       setSignature(txSignature);
+      const updatedContext = updateRunContext({
+        ledger: {
+          signature: txSignature,
+          mintedAt: new Date().toISOString(),
+        },
+      });
+
+      const stabilityDelta: Record<string, number> = {};
+      for (const town of towns.split(",").map((value) => value.trim())) {
+        stabilityDelta[town] = onTime ? 1 : -2;
+      }
+
+      const telemetryResponse = await fetch("/api/telemetry/insert", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          run_id: runId,
+          created_at: timestamp,
+          contracts: [updatedContext?.selectedContract ?? "Ledger proof run"],
+          towns: towns
+            .split(",")
+            .map((value) => value.trim())
+            .filter(Boolean),
+          route_choice: updatedContext?.routeChoice ?? "balanced",
+          events: events
+            .split(",")
+            .map((value) => value.trim())
+            .filter(Boolean),
+          on_time: onTime,
+          payout: onTime ? 350 : 200,
+          town_stability_delta: stabilityDelta,
+          source: "ledger-auto",
+          solana_signature: txSignature,
+          voice_id: updatedContext?.voice?.voiceId,
+          plan_preview: updatedContext?.planText?.slice(0, 250),
+          risk_score:
+            updatedContext?.routeChoice === "short-risky"
+              ? 82
+              : updatedContext?.routeChoice === "long-safe"
+                ? 35
+                : 55,
+        }),
+      });
+      const telemetryData = (await telemetryResponse.json()) as {
+        ok?: boolean;
+        error?: string;
+      };
+      if (!telemetryResponse.ok || !telemetryData.ok) {
+        throw new Error(telemetryData.error ?? "Failed to log telemetry after mint");
+      }
       toast.success("Proof-of-delivery minted on Solana devnet.");
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Transaction failed");
@@ -170,6 +233,11 @@ export default function LedgerPage() {
             <a href={explorerLink} target="_blank" rel="noreferrer" className="underline">
               View on Solana Explorer
             </a>
+            <div className="mt-3">
+              <Link href="/dashboard" className="fd-button-secondary">
+                Continue to Dashboard
+              </Link>
+            </div>
           </div>
         )}
       </section>

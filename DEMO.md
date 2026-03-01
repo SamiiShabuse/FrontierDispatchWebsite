@@ -1,14 +1,27 @@
 # FrontierDispatch 2-Minute Demo Path
 
-1. Open `https://frontierdispatch.tech/demo`.
-2. Click **Open Dispatch Center (Gemini)**.
-3. Pick a contract + route, click **Generate Optimal Dispatch Plan**.
-4. Click **Copy plan**.
-5. Go back, click **Generate Voice Briefing (ElevenLabs)**.
-6. Confirm plan text is prefilled, click **Generate Voice Briefing**, play audio.
-7. Go back, click **Log a Run (Snowflake)** and submit form.
-8. Click **View Dashboard (Snowflake)** and verify metrics updated.
-9. Go back, click **Mint Proof-of-Delivery (Solana)**.
-10. Connect Phantom, click **Mint Proof-of-Delivery (Devnet)**, open explorer link.
+## Fast judge route
 
-If a key is missing, pages show a clear **Not configured** state while preserving demo flow.
+1. Open `https://frontierdispatch.tech/demo`.
+2. Confirm **Live Integration Health** cards load.
+3. Open **Dispatch AI** and click **Generate Optimal Dispatch Plan**.
+4. Open **Telegraph Voice**, generate and play audio.
+5. Open **Ledger**, connect Phantom, mint proof, and open explorer link.
+6. Open **Dashboard** and verify:
+   - run count changed
+   - source breakdown includes `ledger-auto` or `roblox-opencloud`
+   - chain-proof rate is visible
+7. Open **Proof Hub** and verify each sponsor checklist item.
+
+## Expected outputs
+
+- Gemini: plan text with route rationale and contingencies.
+- ElevenLabs: playable generated briefing audio.
+- Solana: devnet tx signature and explorer URL.
+- Snowflake/Telemetry: updated metrics and source/proof analytics.
+- Roblox ingest: available endpoint at `/api/roblox/telemetry/ingest` with shared-secret auth.
+
+## Notes
+
+- If an API key is missing, each page shows a clear fallback/not-configured state.
+- Snowflake fallback mode still allows demo continuity for local runs.

@@ -13,6 +13,10 @@ type SummaryResponse = {
     mostCommonEvent: string;
     townStabilityAverages: Record<string, number>;
     runsOverTime: Array<{ day: string; count: number }>;
+    sourceBreakdown: Array<{ source: string; count: number }>;
+    chainProofRate: number;
+    averageRiskScore: number;
+    routeChoiceBreakdown: Array<{ route: string; count: number }>;
   };
   mode?: "snowflake" | "local-dev-fallback";
   configured?: boolean;
@@ -91,6 +95,31 @@ export default function DashboardPage() {
         </div>
       </section>
 
+      <section className="grid gap-3 md:grid-cols-3">
+        <div className="fd-card">
+          <p className="text-xs text-[var(--muted)]">Chain-Proof Rate</p>
+          <p className="mt-1 text-2xl font-bold">
+            {data?.summary?.chainProofRate?.toFixed(1) ?? "0.0"}%
+          </p>
+        </div>
+        <div className="fd-card">
+          <p className="text-xs text-[var(--muted)]">Average Risk Score</p>
+          <p className="mt-1 text-2xl font-bold">
+            {data?.summary?.averageRiskScore?.toFixed(1) ?? "0.0"}
+          </p>
+        </div>
+        <div className="fd-card">
+          <p className="text-xs text-[var(--muted)]">Telemetry Sources</p>
+          <ul className="mt-1 text-sm text-[var(--muted)]">
+            {(data?.summary?.sourceBreakdown ?? []).map((row) => (
+              <li key={row.source}>
+                {row.source}: {row.count}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       <section className="fd-card">
         <h2 className="text-xl font-semibold">Town Stability Averages</h2>
         <div className="mt-2 grid gap-2 md:grid-cols-3">
@@ -122,6 +151,18 @@ export default function DashboardPage() {
               ))}
             </tbody>
           </table>
+        </div>
+      </section>
+
+      <section className="fd-card">
+        <h2 className="text-xl font-semibold">Route Choice Breakdown</h2>
+        <div className="mt-2 grid gap-2 md:grid-cols-3">
+          {(data?.summary?.routeChoiceBreakdown ?? []).map((row) => (
+            <div key={row.route} className="rounded-md border border-black/10 p-2 text-sm">
+              <p className="font-medium">{row.route}</p>
+              <p className="text-[var(--muted)]">Runs: {row.count}</p>
+            </div>
+          ))}
         </div>
       </section>
     </div>

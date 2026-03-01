@@ -33,16 +33,28 @@ export default function Home() {
 
       <section className="grid gap-4 md:grid-cols-2">
         <div className="fd-card">
-          <h2 className="text-xl font-semibold">Trailer</h2>
+          <h2 className="text-xl font-semibold">Development Workflow</h2>
           <div className="mt-3 h-48 rounded-lg border border-dashed border-black/20 bg-[var(--card-2)] p-3 text-sm text-[var(--muted)]">
-            Trailer placeholder - drop in gameplay + dispatch UI montage.
+            <p className="font-medium text-[var(--foreground)]">Build loop used by the team</p>
+            <ol className="mt-2 list-decimal pl-4">
+              <li>Generate mission strategy in Dispatch AI.</li>
+              <li>Create voice briefing in Telegraph.</li>
+              <li>Mint proof + auto-log telemetry in Ledger.</li>
+              <li>Review balancing metrics in Dashboard + Simulator.</li>
+              <li>Generate Luau scaffolds in Copilot for Studio iteration.</li>
+            </ol>
           </div>
         </div>
         <div className="fd-card">
-          <h2 className="text-xl font-semibold">Screenshots</h2>
+          <h2 className="text-xl font-semibold">Game Systems this powers</h2>
           <div className="mt-3 h-48 rounded-lg border border-dashed border-black/20 bg-[var(--card-2)] p-3 text-sm text-[var(--muted)]">
-            Screenshots placeholder - contracts, routes, events, and delivery
-            outcomes.
+            <ul className="list-disc pl-4">
+              <li>Dynamic contract risk tuning with Monte Carlo simulations.</li>
+              <li>Town stability telemetry from live or fallback ingest.</li>
+              <li>On-chain proof-of-delivery for key mission outcomes.</li>
+              <li>Luau mission boilerplate generation for faster content drops.</li>
+              <li>Judge-proof evidence trail for every sponsor category.</li>
+            </ul>
           </div>
         </div>
       </section>

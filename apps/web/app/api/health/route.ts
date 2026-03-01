@@ -17,6 +17,7 @@ export async function GET() {
       solanaRpcConfigured: hasEnv("SOLANA_RPC_URL"),
       siteUrlConfigured: hasEnv("NEXT_PUBLIC_SITE_URL"),
       robloxUrlConfigured: hasEnv("ROBLOX_GAME_URL"),
+      robloxIngestConfigured: hasEnv("ROBLOX_INGEST_SHARED_SECRET"),
     },
   });
 }

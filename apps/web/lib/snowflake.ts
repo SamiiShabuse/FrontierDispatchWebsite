@@ -84,11 +84,12 @@ export async function insertTelemetryToSnowflake(
 
   await execute(
     `INSERT INTO RUNS
-      (id, created_at, contracts, towns, route_choice, events, on_time, payout, town_stability_delta)
-      SELECT ?, TO_TIMESTAMP_NTZ(?), PARSE_JSON(?), PARSE_JSON(?), ?, PARSE_JSON(?), ?, ?, PARSE_JSON(?)`,
+      (id, created_at, run_id, contracts, towns, route_choice, events, on_time, payout, town_stability_delta, source, solana_signature, voice_id, plan_preview, risk_score)
+      SELECT ?, TO_TIMESTAMP_NTZ(?), ?, PARSE_JSON(?), PARSE_JSON(?), ?, PARSE_JSON(?), ?, ?, PARSE_JSON(?), ?, ?, ?, ?, ?`,
     [
       input.id ?? "",
       input.created_at ?? new Date().toISOString(),
+      input.run_id ?? "",
       JSON.stringify(input.contracts),
       JSON.stringify(input.towns),
       input.route_choice,
@@ -96,6 +97,11 @@ export async function insertTelemetryToSnowflake(
       input.on_time,
       input.payout,
       JSON.stringify(input.town_stability_delta),
+      input.source ?? "manual",
+      input.solana_signature ?? "",
+      input.voice_id ?? "",
+      input.plan_preview ?? "",
+      input.risk_score ?? null,
     ],
   );
 
@@ -138,6 +144,25 @@ export async function queryTelemetrySummaryFromSnowflake(): Promise<
      ORDER BY 1 DESC
      LIMIT 15`,
   );
+  const sourceRows = await execute<{ SOURCE: string; COUNT: number }>(
+    `SELECT COALESCE(source, 'manual') AS SOURCE, COUNT(*) AS COUNT
+     FROM RUNS
+     GROUP BY 1
+     ORDER BY 2 DESC`,
+  );
+  const chainProofRows = await execute<{ RATE: number }>(
+    `SELECT COALESCE(COUNT_IF(solana_signature IS NOT NULL AND solana_signature <> '') / NULLIF(COUNT(*), 0), 0) * 100 AS RATE
+     FROM RUNS`,
+  );
+  const avgRiskRows = await execute<{ AVG_RISK: number }>(
+    "SELECT COALESCE(AVG(risk_score), 0) AS AVG_RISK FROM RUNS WHERE risk_score IS NOT NULL",
+  );
+  const routeRows = await execute<{ ROUTE: string; COUNT: number }>(
+    `SELECT route_choice AS ROUTE, COUNT(*) AS COUNT
+     FROM RUNS
+     GROUP BY ROUTE
+     ORDER BY COUNT DESC`,
+  );
 
   const townStabilityAverages = stabilityRows.reduce<Record<string, number>>(
     (acc, row) => {
@@ -157,6 +182,16 @@ export async function queryTelemetrySummaryFromSnowflake(): Promise<
       townStabilityAverages,
       runsOverTime: overTimeRows.map((row) => ({
         day: row.DAY,
+        count: Number(row.COUNT ?? 0),
+      })),
+      sourceBreakdown: sourceRows.map((row) => ({
+        source: row.SOURCE,
+        count: Number(row.COUNT ?? 0),
+      })),
+      chainProofRate: Number(chainProofRows[0]?.RATE ?? 0),
+      averageRiskScore: Number(avgRiskRows[0]?.AVG_RISK ?? 0),
+      routeChoiceBreakdown: routeRows.map((row) => ({
+        route: row.ROUTE,
         count: Number(row.COUNT ?? 0),
       })),
     },

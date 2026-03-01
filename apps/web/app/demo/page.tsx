@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const steps = [
   {
@@ -14,10 +17,10 @@ const steps = [
       "Audio briefing generated from dispatch plan text with urgency style.",
   },
   {
-    title: "3. Log a Run (Snowflake)",
-    href: "/log-run",
+    title: "3. Mint Proof-of-Delivery (Solana)",
+    href: "/ledger",
     shouldSee:
-      "Successful telemetry insert confirmation and link to dashboard.",
+      "Devnet transaction signature and explorer link. Telemetry auto-logs after mint.",
   },
   {
     title: "4. View Dashboard (Snowflake)",
@@ -26,14 +29,30 @@ const steps = [
       "Updated run count, on-time rate, most common event, and runs-over-time table.",
   },
   {
-    title: "5. Mint Proof-of-Delivery (Solana)",
-    href: "/ledger",
+    title: "5. Open Judge Proof Hub",
+    href: "/proof",
     shouldSee:
-      "Devnet transaction signature and explorer link using memo proof.",
+      "Sponsor-by-sponsor verification list with page routes and expected evidence.",
   },
 ];
 
+type HealthResponse = {
+  status: string;
+  integrations: Record<string, boolean>;
+};
+
 export default function DemoPage() {
+  const [health, setHealth] = useState<HealthResponse | null>(null);
+
+  useEffect(() => {
+    fetch("/api/health")
+      .then((response) => response.json())
+      .then((data) => setHealth(data))
+      .catch(() => {
+        // Keep demo page usable if health endpoint fails.
+      });
+  }, []);
+
   return (
     <div className="space-y-5">
       <section className="fd-card">
@@ -42,6 +61,24 @@ export default function DemoPage() {
           Follow these steps in order. This is the judge path for all sponsor
           categories.
         </p>
+      </section>
+
+      <section className="fd-card">
+        <h2 className="text-xl font-semibold">Live Integration Health</h2>
+        {!health ? (
+          <p className="mt-2 text-sm text-[var(--muted)]">Loading health status...</p>
+        ) : (
+          <div className="mt-3 grid gap-2 md:grid-cols-3">
+            {Object.entries(health.integrations).map(([name, configured]) => (
+              <div key={name} className="rounded-md border border-black/10 p-2 text-sm">
+                <p className="font-medium">{name}</p>
+                <p className={configured ? "text-emerald-700" : "text-amber-700"}>
+                  {configured ? "Configured" : "Not configured"}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
       </section>
 
       <section className="space-y-3">

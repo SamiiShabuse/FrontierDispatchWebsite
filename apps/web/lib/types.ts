@@ -22,6 +22,7 @@ export type DispatchGameState = {
 export type RunTelemetryInput = {
   id?: string;
   created_at?: string;
+  run_id?: string;
   contracts: string[];
   towns: string[];
   route_choice: string;
@@ -29,6 +30,11 @@ export type RunTelemetryInput = {
   on_time: boolean;
   payout: number;
   town_stability_delta: Record<string, number>;
+  source?: "manual" | "ledger-auto" | "roblox-opencloud";
+  solana_signature?: string;
+  voice_id?: string;
+  plan_preview?: string;
+  risk_score?: number;
 };
 
 export type TelemetrySummary = {
@@ -37,4 +43,28 @@ export type TelemetrySummary = {
   mostCommonEvent: string;
   townStabilityAverages: Record<string, number>;
   runsOverTime: Array<{ day: string; count: number }>;
+  sourceBreakdown: Array<{ source: string; count: number }>;
+  chainProofRate: number;
+  averageRiskScore: number;
+  routeChoiceBreakdown: Array<{ route: string; count: number }>;
+};
+
+export type RunContext = {
+  runId: string;
+  selectedContract: string;
+  routeChoice: "short-risky" | "balanced" | "long-safe";
+  towns: string[];
+  events: string[];
+  playerNotes?: string;
+  planText?: string;
+  voice?: {
+    voiceId: string;
+    urgency: "normal" | "urgent";
+    generatedAt: string;
+  };
+  ledger?: {
+    signature: string;
+    mintedAt: string;
+  };
+  updatedAt: string;
 };

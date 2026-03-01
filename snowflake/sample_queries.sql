@@ -25,3 +25,20 @@ FROM FRONTIERDISPATCH_DB.PUBLIC.RUNS
 GROUP BY day
 ORDER BY day DESC
 LIMIT 15;
+
+-- Source split (manual, ledger-auto, roblox-opencloud)
+SELECT source, COUNT(*) AS run_count
+FROM FRONTIERDISPATCH_DB.PUBLIC.RUNS
+GROUP BY source
+ORDER BY run_count DESC;
+
+-- Chain-proof rate
+SELECT
+  COUNT_IF(solana_signature IS NOT NULL AND solana_signature <> '') / NULLIF(COUNT(*), 0) * 100 AS chain_proof_rate
+FROM FRONTIERDISPATCH_DB.PUBLIC.RUNS;
+
+-- Route risk score by choice
+SELECT route_choice, AVG(risk_score) AS avg_risk_score
+FROM FRONTIERDISPATCH_DB.PUBLIC.RUNS
+GROUP BY route_choice
+ORDER BY avg_risk_score DESC;

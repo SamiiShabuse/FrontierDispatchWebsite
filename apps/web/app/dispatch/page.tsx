@@ -1,10 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { DEFAULT_TOWN_STATUSES, EVENT_TYPES, RESOURCE_TYPES } from "@/lib/constants";
 import { JudgeProof } from "@/components/judge-proof";
 import { TrackCallout } from "@/components/track-callout";
+import { writeRunContext } from "@/lib/run-context";
 
 type ContractPreset = {
   id: string;
@@ -103,6 +105,20 @@ export default function DispatchPage() {
 
       setPlanText(data.planText);
       localStorage.setItem("frontier_latest_plan", data.planText);
+      const contextTowns = townStatuses.map((town) => town.name);
+      writeRunContext({
+        runId: `run-${Date.now()}`,
+        selectedContract:
+          selectedContract === "manual"
+            ? manualContract
+            : selectedPreset?.title ?? manualContract,
+        routeChoice,
+        towns: contextTowns,
+        events: [...EVENT_TYPES],
+        playerNotes,
+        planText: data.planText,
+        updatedAt: new Date().toISOString(),
+      });
       toast.success("Dispatch plan generated.");
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Unknown error");
@@ -221,6 +237,11 @@ export default function DispatchPage() {
           {planText ||
             "Output will include recommended contracts, route rationale, contingencies, and summary."}
         </pre>
+        <div className="mt-4">
+          <Link href="/telegraph" className="fd-button-secondary">
+            Continue to Telegraph Voice
+          </Link>
+        </div>
       </section>
     </div>
   );
